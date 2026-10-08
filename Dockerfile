@@ -12,8 +12,8 @@ RUN apk add --no-cache build-base cairo-dev pango-dev
 # Install Chromium
 RUN apk add --no-cache chromium
 
-#install PNPM globaly
-RUN npm install -g pnpm@10.26.0
+# Install PNPM globally
+RUN npm install -g pnpm@10.26.0 --force
 
 ENV PUPPETEER_SKIP_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
@@ -25,9 +25,10 @@ WORKDIR /usr/src
 # Copy app source
 COPY . .
 
-RUN pnpm install
+RUN npx --yes pnpm@10.26.0 --version
+RUN npx --yes pnpm@10.26.0 install
 
-RUN pnpm build
+RUN npx --yes pnpm@10.26.0 build
 
 EXPOSE 3000
 
